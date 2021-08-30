@@ -4,11 +4,12 @@ const express = require('express');
 const router = require('./routes/routes');
 
 const app = express();
+app.use(express.json());
 
 const PORT = process.env.PORT || 8000;
 
-app.use("/", router())
+app.use("/", router());
 
 app.listen(PORT, () => {
-    console.log(`Se encedió el puerto ${PORT}`);
+    console.log(`La aplicacion se encedió el puerto ${PORT}`);
 });
