@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const connection = require("../../database/database");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 
@@ -26,21 +27,7 @@ async function register(req, res) {
       status: 400,
     });
   }
-  // Databse connection
-  const connection = mysql.createConnection({
-    host: "localhost",
-    database: "movies_db",
-    user: "root",
-    password: "",
-  });
-
-  connection.connect(function (error) {
-    if (error) {
-      throw error;
-    } else {
-      // Query that verifies that email exists
-
-      connection.query(
+    connection.query(
         "SELECT * FROM movies_db.users WHERE email =" + mysql.escape(email),
         function (error, results) {
           if (error) throw error;
@@ -53,7 +40,6 @@ async function register(req, res) {
 
           if (results.length === 0 && admin === 1) {
             // Add a new admin User
-
             connection.query(
               "INSERT INTO `movies_db`.`users` (`name`, `email`, `password`, `admin`) VALUES " +
                 "(" +
@@ -75,7 +61,6 @@ async function register(req, res) {
 
           if (results.length === 0) {
             // Add a new user
-
             connection.query(
               "INSERT INTO `movies_db`.`users` (`name`, `email`, `password`) VALUES " +
                 "(" +
@@ -94,9 +79,7 @@ async function register(req, res) {
               .json({ message: "Usuario común registrado", status: 200 });
           }
         }
-      );
-    }
-  });
+    );
 }
 
 module.exports = { register };

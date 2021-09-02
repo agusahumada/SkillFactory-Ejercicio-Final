@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const {home} = require("../controller/homeController")
-const { register } = require('../controller/registerController');
-const { login } = require('../controller/loginController');
+const {home} = require("../controller/moviesController/homeController")
+const { register } = require('../controller/userController/registerController');
+const { login } = require('../controller//userController/loginController');
 
 module.exports = function(){
     router.get('/favorites', );
